@@ -1,0 +1,131 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+
+<html>
+<head>
+    <title>Первый</title>
+    <link rel="stylesheet" href="~/css/site.css"/>
+</head>
+<body style="background-color:#ffffff;" >
+    <div class="row justify-content-around" >
+        <div class="col-4">
+            <h3 style=" text-align: center; ">Start managing your meetings professionally</h3>
+            <p class="lead" style="text-align: center;"><a class="button" asp-page="/HostMan/AccountPage" role="button">Go to Meeting manager page</a></p>
+        </div>
+        <div class="col-4">
+            <h3 >Book meeting here</h3>
+            <form method="post" >
+                <div style="max-width:200px; margin-bottom: 5px; "><input name="id" value="Type meeting key..." class="form-control" /></div>
+                <div><button class="button">Let`s reserve time!</button></div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+<html>
+<head>
+    <title>Product list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+
+        #layer_product_0 {
+            background: #dbdbdb; /* Цвет фона */
+            border-radius: 5px;
+        }
+
+        #layer_product_1 {
+            width: 100%; /* Ширина второго слоя */
+            background: #ffffff; /* Цвет фона */
+            border-radius: 5px; /* Уголки */
+            margin-left: 20px;
+            width: 1070px;
+            background-color: rgba(255, 255, 255, 0.8)
+        }
+
+            #layer_product_1 P {
+                padding: 10px; /* Поля вокруг параграфа */
+            }
+        .btn {
+            border: 1.5px solid #D8D8D8;
+            background-color: #EAEAEA;
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div style="background-color: rgba(255, 255, 255, 0.5); margin-top: 10px" class="jumbotron jumbotron-fluid" , id="layer_product_0">
+        <h4 >Product features list</h4>
+
+        <div id="layer_product_1" >
+            <h4> One-on-one</h4>
+            <p>
+                Allow your invitee to schedule individual slots
+            </p>
+        </div>
+        <div id="layer_product_1" >
+            <h4>Collective</h4>
+            <p> Enable your invitee to schedule a time with multiple team members at once</p>
+        </div>
+        <div id="layer_product_1" >
+            <h4>Group</h4>
+            <p> Host multiple invitees at the same event for webinars, trainings and more</p>
+        </div>
+    </div>
+</body>
+</html>
+
+@*/кнопка вверх*@
+
+<html>
+<head>
+    <title>Team</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+        #layer_Team_0 {
+            background: #dbdbdb; /* Цвет фона */
+            border-radius: 5px;
+        }
+
+        #layer_Team_1 {
+            width: 100%;
+            background: #ffffff;
+            border-radius: 5px;
+            margin-left: 20px;
+            width: 1070px;
+            background-color: rgba(255, 255, 255, 0.8)
+        }
+
+            #layer_Team_1 P {
+                padding: 10px;
+            }
+    </style>
+</head>
+<body>
+    <div style="background-color: rgba(255, 255, 255, 0.5);" class="jumbotron jumbotron-fluid" , id="layer_Team_0">
+        <h6 class="display-4">Team</h6>
+        <div id="layer_Team_1"><p>Member name and description</p></div>
+        <div id="layer_Team_1"><p>Member name and description</p></div>
+        <div id="layer_Team_1"><p>Member name and description</p></div>
+    </div>
+</body>
+</html>
+
+@*/кнопка вверх*@
+
+
+<div style="background-color: rgba(255, 255, 255, 0.5);" class="jumbotron">
+    <h4 style="text-align: left;">Contacts.</h4>
+    <div id="layer_Team_1"><p>email</p></div>
+    <div id="layer_Team_1"><p>phone</p></div>
+</div>
+
+<div style="background-color: rgba(255, 255, 255, 0.5);" class="jumbotron">
+    <h4 style="text-align: left;">Privasy policy link and short description.</h4>
+</div>
+

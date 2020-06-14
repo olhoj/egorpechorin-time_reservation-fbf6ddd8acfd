@@ -1,0 +1,114 @@
+﻿@page
+@model TR.Web.AccountPageModel
+
+@{
+    ViewData["Title"] = "Troinichok Account";
+}
+
+<h1>Account</h1>
+
+<html>
+<head>
+    <title>Meetings templates</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+
+        #layer {
+            width: 100%;
+            padding: 10px;
+            background: #dbdbdb; /* Цвет фона */
+            border-radius: 5px; /* Уголки */
+            width: 215px;
+        }
+    </style>
+    <script type="text/javascript" src="~/js/site.js"></script>
+</head>
+<body>
+    <div style="background-color: rgba(255, 255, 255, 0.5); width: auto" class="jumbotron jumbotron-fluid" , id="layer_Accepted">
+        <div>
+            <h2>Meetings templates</h2>
+            <a asp-page="/HostMan/MeetingVariantManage">add new</a>
+        </div>
+        <div style="        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));">
+            @if (Model.MeetingVariants != null)
+            {
+                @foreach (var el in Model.MeetingVariants)
+                {
+                    <div style="background-color: rgba(255, 255, 255, 0.8);" class="jumbotron jumbotron-fluid" , id="layer">
+                        <h4>@el.Title - @el.Duration</h4>
+                        <p>@el.Description</p>
+                        <!--<a class="btn btn-light" asp-page="/HostMan/MeetingVariantManage" asp-route-ID="@el.MeetingVariantID">Change</a>-->
+                        <form asp-page-handler="details" method="post">
+                            <input type="hidden" name="id" value="@el.MeetingVariantID" />
+                            <p><button class="btn btn-light">Details</button></p>
+                        </form>
+                        <form asp-page-handler="delete" method="post">
+                            <input type="hidden" name="id" value="@el.MeetingVariantID" />
+                            <p><button class="btn btn-light">Delete</button></p>
+                        </form>
+                        <p><button class="btn btn-light" onclick="copyTextToClipboard(@el.MeetingVariantID)">Copy link to clipboard</button></p>
+                        <p> Key: <text id="copyId" value="@el.MeetingVariantID">@el.MeetingVariantID</text> </p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</body>
+</html>
+
+
+@if (Model.AcceptedSlots != null)
+{
+    <html>
+    <head>
+        <title>Accepted meetings</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+
+            #layer_Accepted {
+                border-radius: 5px; /* Уголки */
+                width: 1070px;
+                padding: 10px;
+            }
+
+            #layer_Accepted_2 {
+                padding: 10px;
+                border-radius: 5px; /* Уголки */
+                margin-left: 20px;
+                width: 1030px;
+                background-color: rgba(255, 255, 255, 0.8)
+            }
+        </style>
+    </head>
+    <body>
+        <div style="background-color: rgba(255, 255, 255, 0.5); width: auto" , id="layer_Accepted">
+            <div>
+                <h2>Accepted meetings</h2>
+            </div>
+            @if (Model.MeetingVariants != null)
+            {
+                @foreach (var el in Model.AcceptedSlots)
+                {
+                    <div>
+                        <div style="background-color: rgba(255, 255, 255, 0.8);" , id="layer_Accepted_2">
+                            <p>Data: @el.Slot.StartSlotTime.ToString("dd/MM/yyyy")</p>
+                            <p>Time: @el.Slot.StartSlotTime.ToString("H:mm") - @el.Slot.FinishSlotTime.ToString("H:mm")</p>
+                            <p>Title: @el.Slot.MeetingVariant.Title</p>
+                            <p>Name: @el.ClientName</p>
+                            <p>Mail: @el.ClientContactMail</p>
+                        </div>
+                        <div>
+                            <form asp-page-handler="deleteacceptedslot" method="post">
+                                <input type="hidden" name="id" value="@el.AcceptedSlotID" />
+                                <button class="btn btn-light">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+
+    </body>
+</html>
+}

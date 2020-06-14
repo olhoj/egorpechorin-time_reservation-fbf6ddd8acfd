@@ -1,0 +1,170 @@
+﻿@page "{id}/{day:int?}/{time:datetime?}"
+@model TR.Web.MeetingReservationModel
+@{
+    ViewData["Title"] = "MeetingReservation";
+}
+
+<h1>Meeting Reservation</h1>
+
+<html>
+<head>
+    <title>Meetings templates</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+
+        #layer_mr {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            float: left;
+            height: 80px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #layer_Accepted {
+            border-radius: 5px; /* Уголки */
+            padding: 10px;
+            width: 640px;
+            height: 200px;
+        }
+    </style>
+    <script type="text/javascript" src="~/js/site.js"></script>
+</head>
+<body>
+    <div style="background-color: rgba(255, 255, 255, 0.5)" class="jumbotron jumbotron-fluid" , id="layer_Accepted">
+        <div style="width: 300px; margin-right: 15px;" , id="layer_mr">
+            @Model.MeetingVariant.Title
+        </div>
+        <div style="width: 300px;" , id="layer_mr">
+            @Model.MeetingVariant.Duration
+        </div>
+        <div style="width: 620px; margin-top: 20px" , id="layer_mr">
+            @Model.MeetingVariant.Description
+        </div>
+    </div>
+</body>
+</html>
+
+<html>
+<head>
+    <title>Meetings templates</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+
+        #layer_meeting {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            float: left;
+            height: 80px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #layer_Accepted {
+            border-radius: 5px; /* Уголки */
+            padding: 10px;
+            width: 640px;
+            height: 200px;
+        }
+        .btn {
+            border: 1.5px solid #D8D8D8;
+            background-color: #EAEAEA;
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+    <script type="text/javascript" src="~/js/site.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <ul class="list-group col-md-3 offset-1">
+                <li class="list-group-item">Select day</li>
+                @{
+                    DateTime temp = new DateTime();
+                    foreach (var el in Model.Slots)
+                    {
+                        DateTime cur = el.StartSlotTime.Date;
+                        if (temp != cur)
+                        {
+                            temp = cur;
+                            <li class="list-group-item">
+                                <a href="./@Model.MeetingVariant.MeetingVariantID?day=@el.SlotID">
+                                    @el.StartSlotTime.Date.ToString("dd/MM/yyyy")
+                                </a>
+                            </li>
+                        }
+                    }
+                }
+            </ul>
+
+            @if (Model.SelectedSlot != null)
+            {
+                <ul class="list-group col-md-3 offset-1">
+                    <li class="list-group-item">Select time</li>
+                    @{
+                        foreach (var el in Model.Slots)
+                        {
+                            if (el.IsAvailable)
+                            {
+                                int y = el.StartSlotTime.Year;
+                                int m = el.StartSlotTime.Month;
+                                int d = el.StartSlotTime.Day;
+
+                                if (Model.SelectedSlot.StartSlotTime.Year == y
+                                    && Model.SelectedSlot.StartSlotTime.Month == m
+                                    && Model.SelectedSlot.StartSlotTime.Day == d)
+                                {
+                                    <li class="list-group-item">
+                                        <a href="./@Model.MeetingVariant.MeetingVariantID?day=@el.SlotID&course=@el.SlotID">
+                                            @el.StartSlotTime.ToString("H:mm")
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        }
+                    }
+                </ul>
+            }
+        </div>
+    </div>
+</body>
+</html>
+
+<html>
+<body>
+    <div style="margin-top: 10px">
+    <form method="post">
+        @if (Model.FinalSlot != null)
+        {
+            <input type="hidden" name="id" value="@Model.FinalSlot.SlotID" />
+            <input type="hidden" name="mvId" value="@Model.MeetingVariant.MeetingVariantID" />
+            <input type="hidden" name="mvOW" value="@Model.MeetingVariant.Owner" />
+        }
+
+        <div class="form-group">
+            <input asp-for="@Model.AcceptedSlot.ClientName" value="@( Model.AcceptedSlot != null ? Model.AcceptedSlot.ClientName : string.Empty)" type="text" class="form-control col-5" placeholder="Enter your name" aria-label="Имя пользователя" aria-describedby="basic-addon1">
+            <span asp-validation-for="@Model.AcceptedSlot.ClientName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="@Model.AcceptedSlot.ClientContactMail" value="@( Model.AcceptedSlot != null ? Model.AcceptedSlot.ClientContactMail : string.Empty)" type="text" class="form-control col-5" placeholder="Enter your email" aria-label="Имя пользователя" aria-describedby="basic-addon1">
+            <span asp-validation-for="@Model.AcceptedSlot.ClientContactMail" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="@Model.AcceptedSlot.ClientComment" value="@( Model.AcceptedSlot != null ? Model.AcceptedSlot.ClientComment : string.Empty)" type="text" class="form-control col-5" placeholder="Leave your comment" aria-label="Имя пользователя" aria-describedby="basic-addon1">
+            <span asp-validation-for="@Model.AcceptedSlot.ClientComment" class="text-danger"></span>
+        </div>
+
+        <input type="submit" value="Save before continue" class="btn btn-info" />
+        <div asp-validation-summary="All"></div>
+
+    </form>
+    </div>
+</body>
+</html>
+
+
+

@@ -1,0 +1,131 @@
+﻿@page "{id?}"
+@model TR.Web.MeetingVariantManageModel
+@{
+    ViewData["Title"] = "MeetingVariantManage";
+}
+
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+
+        #layer_MVM {
+            width: 100%; /* Ширина второго слоя */
+            background: #ffffff; /* Цвет фона */
+            border-radius: 5px; /* Уголки */
+            width: 1070px;
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .btn {
+            border: 1.5px solid #D8D8D8;
+            background-color: #EAEAEA;
+            color: black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+
+        <a class="btn btn-light" asp-page="/HostMan/AccountPage">Back</a>
+        <button asp-page-handler="BackSave" class="btn btn-light">Back and Save</button>
+        <input type="hidden" name="id" value="@Model.CurrentID" />
+
+        <!--<div asp-validation-summary="All"></div>-->
+        <div id="layer_MVM">
+            <div class="form-group">
+                <label asp-for="@Model.MeetingVariant.Title" class="control-label"></label>
+                <input asp-for="@Model.MeetingVariant.Title" value="@( Model.MeetingVariant != null ? Model.MeetingVariant.Title : "Title") ">
+                <span asp-validation-for="@Model.MeetingVariant.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.MeetingVariant.Duration" class="control-label"></label>
+                <input asp-for="@Model.MeetingVariant.Duration" step="60000‬"  min="00:05" max= "11:00" type="time" value="@( Model.MeetingVariant != null ? Model.MeetingVariant.Duration.ToString() : string.Empty)">
+                <span asp-validation-for="@Model.MeetingVariant.Duration" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.MeetingVariant.Description" class="control-label"></label>
+                <textarea asp-for="@Model.MeetingVariant.Description" rows="7" style="width:100%;overflow:hidden;resize: none;">@( Model.MeetingVariant != null ? Model.MeetingVariant.Description : "Description")</textarea>
+                <span asp-validation-for="@Model.MeetingVariant.Description" class="text-danger"></span>
+            </div>
+        </div>
+            @if (!Model.isCreated)
+            {
+                <input type="submit" value="Save before continue" class="btn btn-light" />
+            }
+    </form>
+</body>
+</html>
+
+
+<html>
+@if (Model.isCreated)
+{
+    <div>
+        <div>
+            Diapasons
+            <a asp-page="/HostMan/DiapasonCreate" asp-route-ID="@Model.CurrentID">add new</a>
+        </div>
+        <div>
+            @if (Model.Diapasons != null)
+            {
+                foreach (var diap in Model.Diapasons)
+                {
+                    <div class="jumbotron jumbotron-fluid" , id="layer_MVM">
+                        <div>
+                            Dates from @diap.StartDay.ToString("dd/MM/yyyy")
+                            to @diap.FinishDay.ToString("dd/MM/yyyy")
+                        </div>
+                        <div>
+                            Sessions starts at @diap.StartTime.ToString("H:mm")
+                            Ends at @diap.FinishTime.ToString("H:mm")
+                        </div>
+                        <div>
+                            At days :
+                            @if (diap.IsMonday)
+                            {
+                                <text> Moday</text>
+                            }
+                            @if (diap.IsTuesday)
+                            {
+                                <text> Tuesday</text>
+                            }
+                            @if (diap.IsWednesday)
+                            {
+                                <text> Wednesday</text>
+                            }
+                            @if (diap.IsThursday)
+                            {
+                                <text> Thursday</text>
+                            }
+                            @if (diap.IsFriday)
+                            {
+                                <text> Friday</text>
+                            }
+                            @if (diap.IsSaturday)
+                            {
+                                <text> Saturday</text>
+                            }
+                            @if (diap.IsSunday)
+                            {
+                                <text> Sunday</text>
+                            }
+                        </div>
+
+                    </div>
+                    <form method="post">
+                        <button asp-page-handler="Delete" class="btn btn-light">Delete</button>
+                        <input type="hidden" name="idD" value="@diap.DiapasonID" />
+                        <input type="hidden" name="idM" value="@Model.MeetingVariant.MeetingVariantID" />
+                    </form>
+                }
+            }
+        </div>
+    </div>
+
+
+}
+</html>

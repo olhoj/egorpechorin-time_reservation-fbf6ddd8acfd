@@ -1,0 +1,66 @@
+﻿@page "{id?}"
+@model TR.Web.Pages.HostMan.DiapasonCreateModel
+@{
+    ViewData["Title"] = "DiapasonCreate";
+}
+
+<h1>Diapason Create</h1>
+
+<html>
+<form method="post">
+    <head>
+        <title>Meetings templates</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <style type="text/css">
+
+            #layer_prv {
+                background-color: rgba(255, 255, 255, 0.5);
+                float: left;
+                height: 400px;
+                padding: 10px;
+                border-radius: 5px;
+                margin-right: 20px;
+            }
+            .btn {
+                border: 1.5px solid #D8D8D8;
+                background-color: #EAEAEA;
+                color: black;
+                cursor: pointer;
+            }
+        </style>
+        <script type="text/javascript" src="~/js/site.js"></script>
+    </head>
+    <body>
+        <div>
+            <div style="width: 400px" , id="layer_prv">
+                <p style="text-align: left;">Diapason first day:</p>
+                <input class="form-control" name="StartDay" asp-for="Diapason.StartDay" type="date" />
+                <p></p>
+
+                <p style="text-align: left;">Diapason last day:</p>
+                <input class="form-control" name="FinishDay" asp-for="Diapason.FinishDay" type="date" />
+
+                <p style="text-align: left;">Sessions start time:</p>
+                <p style="text-align: left;"><input id="appt-time" type="time" name="StartTime" asp-for="Diapason.StartTime" /></p>
+
+                <p style="text-align: left;">Sessions end time:</p>
+                <p style="text-align: left;"><input id="appt-time" type="time" name="FinishTime" asp-for="Diapason.FinishTime" /></p>
+            </div>
+            <div style="width: 200px;" , id="layer_prv">
+                <p style="text-align: left;"><input name="IsMonday" asp-for="Diapason.IsMonday" type="checkbox" /> <label for="scales">Monday</label></p>
+                <p style="text-align: left;"><input name="IsTuesday" asp-for="Diapason.IsTuesday" type="checkbox" /> <label for="scales">Tuesday</label></p>
+                <p style="text-align: left;"><input name="IsWednesday" asp-for="Diapason.IsWednesday" type="checkbox" /> <label for="scales">Wednesday</label></p>
+                <p style="text-align: left;"><input name="IsThursday" asp-for="Diapason.IsThursday" type="checkbox" /> <label for="scales">Thursday</label></p>
+                <p style="text-align: left;"><input name="IsFriday" asp-for="Diapason.IsFriday" type="checkbox" /> <label for="scales">Friday</label></p>
+                <p style="text-align: left;"><input name="IsSaturday" asp-for="Diapason.IsSaturday" type="checkbox" /> <label for="scales">Saturday</label></p>
+                <p style="text-align: left;"><input name="IsSunday" asp-for="Diapason.IsSunday" type="checkbox" /> <label for="scales">Sunday</label></p>
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-light" asp-route-id="@Model.CurrentID" asp-page="/HostMan/MeetingVariantManage">Back</a>
+            <button asp-page-handler="BackSave" class="btn btn-light">Back and Save</button>
+            <input type="hidden" name="id" value="@Model.CurrentID" />
+        </div>
+    </body>
+</form>
+</html>
